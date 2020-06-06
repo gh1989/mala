@@ -115,7 +115,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="mala_more.cpp" />
     <ClCompile Include="mala.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mala.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
