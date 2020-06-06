@@ -120,6 +120,6 @@ int mala_more() {
 	I /= N;
 	std::cout << "acceptance: " << a / N << std::endl;
 	std::cout << "I: " << I << std::endl;
-	std::cout << "Time: " << (finish - start).count() << std::endl;
+	std::cout << "Time: " << (finish - start).count() / 1e9 << std::endl;
 	return 0;
 }

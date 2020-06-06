@@ -6,7 +6,7 @@
 #include "mala.h"
 
 const size_t B = 1e5;
-const size_t N = 1e6;
+const size_t N = 1e7;
 typedef double Tnum;
 const Tnum b = 0.01;
 const Tnum tau = 0.1;
@@ -116,6 +116,6 @@ int mala() {
 	I /= N;
 	std::cout << "acceptance: " << a / N << std::endl;
 	std::cout << "I: " << I << std::endl;
-	std::cout << "Time: " << (finish - start).count() << std::endl;
+	std::cout << "Time: " << (finish - start).count()/1e9 << std::endl;
 	return 0;
 }
