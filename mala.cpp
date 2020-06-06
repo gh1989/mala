@@ -6,10 +6,10 @@
 #include "mala.h"
 
 const size_t B = 1e5;
-const size_t N = 1e7;
+const size_t N = 1e6;
 typedef double Tnum;
 const Tnum b = 0.01;
-const Tnum tau = 0.032;
+const Tnum tau = 0.1;
 static const Tnum epsilon = std::numeric_limits<Tnum>::min();
 const Tnum M_PI = 3.141592653589793238462643383279;
 
@@ -32,9 +32,13 @@ Tnum logpi(Tnum x, Tnum y) {
 		Tnum f2 = (y + b * x * x + 100.0 * b);
 		return -f1 * f1 - f2 * f2;
 	}
+	
+	//-2 * f2_y*f2
 	if (_Y)
-		return -200 * b + 2 * b*x*x + 2 * y;
-	return x / 50.0 + 4 * b*x*(b*x*x - 100 * b + y);
+		return -200 * b - 2 * b*x*x - 2 * y;
+
+	//-2*f1_x*f1
+	return -x / 50.0 - 4 * b*x*(b*x*x + 100 * b + y);
 }
 
 // The matrix { {c, 0}, {0, 1} } also { {sqrt(c), 0}, {0, 1} }
