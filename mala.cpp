@@ -115,10 +115,3 @@ int mala() {
 	std::cout << "Time: " << (finish - start).count() << std::endl;
 	return 0;
 }
-
-int main()
-{
-	mala();
-	mala_more();
-	system("PAUSE");
-}

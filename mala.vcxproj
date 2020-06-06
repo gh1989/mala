@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="mala_more.cpp" />
     <ClCompile Include="mala.cpp" />
   </ItemGroup>
