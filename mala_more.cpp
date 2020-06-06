@@ -80,15 +80,6 @@ int main(){
   
   sfunc<dim> logpi = logpi_f1;
 
-/*  
-  auto grd_log = grad_numeric(logpi);
-  std::array<Tnum,dim>  x = {1,2};
-  std::copy(x.begin(), x.end(), std::ostream_iterator<Tnum>(std::cout, ", "));
-  auto z = logpi(x);
-  std::cout<<std::endl<<z<<std::endl;
-  auto yq = grd_log(x);
-  std::copy(yq.begin(), yq.end(), std::ostream_iterator<Tnum>(std::cout, ", "));
-*/  
 	const auto sqrt2tau = sqrt(2 * tau);
 	nvec<dim> x{0,0},y{0,0};
 	bool burnin = true;
