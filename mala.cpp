@@ -98,7 +98,7 @@ int main(){
 		}
 
 		if (k>B)
-			I += x1 * x1 + y1 * y2;
+			I += x1 * x1 + y1 * y1;
 	}
 
 	I /= N;
