@@ -1,0 +1,2 @@
+#define Mala_VERSION_MAJOR @Mala_VERSION_MAJOR@
+#define Mala_VERSION_MINOR @Mala_VERSION_MINOR@
