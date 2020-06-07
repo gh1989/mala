@@ -7,6 +7,8 @@
 
 #include "standard_functionals.h"
 
+using namespace Mala;
+
 // function inputs
 Tnum logpi_f1(std::array<Tnum, 2> v)
 {
