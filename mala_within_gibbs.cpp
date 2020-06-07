@@ -25,7 +25,7 @@ int main() {
 	sfunc<dim> logpi = logpi_f1;
 
 	// model params
-	const Tnum tau = 0.01;
+	const Tnum tau = 0.1;
 	const size_t B = 1e5;
 	const size_t N = 1e6;
 
@@ -56,17 +56,21 @@ int main() {
 	for (int k = 0; k < N + B; k++)
 		for(size_t j = 0; j < dim_n; j++)
 		{
-			// subvector x_j
-			std::copy(begin(x_j), end(x_j), begin(x) + j*dim_m);
-			
+			// v(x^k_j)
 			gradlog_j = gradlogpi[j](x);
+			
+			// \xi^k_j
 	    std::generate_n(begin(innov_j), dim_m, rgen);
+
+			// x^k_j
+			std::copy_n(begin(x) + j*dim_m, dim_m, begin(x_j) );			
 	    
-			// candidate block
+			// candidate block y^k_j
 			y_j = x_j + tau * gradlog_j + sqrt2tau * innov_j;
-			// candidate whole
+			
+			// candidate whole y^k
 			y = x;
-			std::copy(begin(y) + j*dim_m, begin(y)+(j+1)*dim_m, begin(y_j));			
+			std::copy_n(begin(y_j), dim_m, begin(y) + j*dim_m);			
 			
 			logprop = logpi(y) + lq[j](y, x) - logpi(x) - lq[j](x, y);
 			if (log(uniform(e)) < logprop)
