@@ -11,7 +11,9 @@ typedef double Tnum;
 const Tnum b = 0.01;
 const Tnum tau = 0.1;
 static const Tnum epsilon = std::numeric_limits<Tnum>::min();
+#ifndef M_PI
 const Tnum M_PI = 3.141592653589793238462643383279;
+#endif
 
 Tnum uniform()
 {
