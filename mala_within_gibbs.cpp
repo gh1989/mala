@@ -25,9 +25,9 @@ int main() {
 	sfunc<dim> logpi = logpi_f1;
 
 	// model params
-	const Tnum tau = 0.2;
+	const Tnum tau = 0.01;
 	const size_t B = 1e5;
-	const size_t N = 1e7;
+	const size_t N = 1e6;
 
 	// rng
 	std::normal_distribution<Tnum> normal(0, 1);
@@ -49,7 +49,7 @@ int main() {
 
 	// generated funcs
 	auto gradlogpi = grad_numeric_blocks<dim,dim_m>(logpi);
-	auto lq = logq_blocks(gradlogpi, tau);
+	auto lq = logq_blocks<dim,dim_m>(gradlogpi, tau);
 	
 	// Record start time
 	auto start = std::chrono::high_resolution_clock::now();
@@ -59,7 +59,7 @@ int main() {
 			// subvector x_j
 			std::copy(begin(x_j), end(x_j), begin(x) + j*dim_m);
 			
-			gradlog_j = gradlogpi[j](x_j);
+			gradlog_j = gradlogpi[j](x);
 	    std::generate_n(begin(innov_j), dim_m, rgen);
 	    
 			// candidate block
@@ -68,7 +68,7 @@ int main() {
 			y = x;
 			std::copy(begin(y) + j*dim_m, begin(y)+(j+1)*dim_m, begin(y_j));			
 			
-			logprop = logpi(y) + lq[j](y_j, x_j) - logpi(x) - lq[j](x_j, y_j);
+			logprop = logpi(y) + lq[j](y, x) - logpi(x) - lq[j](x, y);
 			if (log(uniform(e)) < logprop)
 			{
 				x = y;
@@ -77,14 +77,14 @@ int main() {
 			}
 
 			if (k > B)
-				I += inner_product(x,x);	    
+				I += inner_product(x,x);
 		}
-	}
+
 	// Record end time
 	auto finish = std::chrono::high_resolution_clock::now();
 
-	I /= N;
-	std::cout << "acceptance: " << a / N << std::endl;
+	I /= (N*dim_n);
+	std::cout << "acceptance: " << a / (N*dim_n) << std::endl;
 	std::cout << "I: " << I << std::endl;
 	std::cout << "Time: " << (finish - start).count() / 1e9 << std::endl;
 	return 0;
