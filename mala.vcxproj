@@ -118,9 +118,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mala_more.cpp" />
     <ClCompile Include="mala.cpp" />
+    <ClCompile Include="mala_within_gibbs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mala.h" />
+    <ClInclude Include="standard_functionals.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

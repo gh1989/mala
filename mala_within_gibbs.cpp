@@ -5,10 +5,11 @@
 #include <ctime>
 #include <chrono>  // for high_resolution_clock
 
+#include "mala.h"
 #include "standard_functionals.h"
 
 // function inputs
-Mala::Tnum logpi_f1(std::array<Mala::Tnum, 2> v)
+Mala::Tnum logpi_f2(std::array<Mala::Tnum, 2> v)
 {
 	const Mala::Tnum b = 0.01;
 	Mala::Tnum &x = v[0], &y = v[1];
@@ -17,17 +18,17 @@ Mala::Tnum logpi_f1(std::array<Mala::Tnum, 2> v)
 	return -f1 * f1 - f2 * f2;
 }
 
-int main() {
+int mala_within_gibbs() {
 	// model inputs
 	constexpr long unsigned dim_m = 1; // size of each block
 	constexpr long unsigned dim_n = 2; // number of blocks
 	constexpr long unsigned dim = dim_m*dim_n;
-	Mala::sfunc<dim> logpi = logpi_f1;
+	Mala::sfunc<dim> logpi = logpi_f2;
 
 	// model params
 	const Mala::Tnum tau = 0.1;
 	const size_t B = 1e5;
-	const size_t N = 1e6;
+	const size_t N = 1e7;
 
 	// rng
 	std::normal_distribution<Mala::Tnum> normal(0, 1);
