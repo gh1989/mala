@@ -9,12 +9,12 @@
 #include "standard_functionals.h"
 
 // function inputs
-Mala::Tnum logpi_f2(std::array<Mala::Tnum, 2> v)
+auto logpi_f2(const Mala::nvec<2> &v)
 {
-	const Mala::Tnum b = 0.01;
-	Mala::Tnum &x = v[0], &y = v[1];
-	Mala::Tnum f1 = x / 10.0;
-	Mala::Tnum f2 = (y + b * x*x + 100.0 * b);
+	const auto b = 0.01;
+	auto &x = v[0], &y = v[1];
+	auto f1 = x / 10.0;
+	auto f2 = (y + b * x*x + 100.0 * b);
 	return -f1 * f1 - f2 * f2;
 }
 
@@ -34,7 +34,7 @@ int mala_within_gibbs() {
 	std::normal_distribution<Mala::Tnum> normal(0, 1);
 	std::uniform_real_distribution<Mala::Tnum> uniform(0, 1);
 	std::default_random_engine e(std::time(0));
-	auto rgen = [&normal,&e]()->Mala::Tnum{ return normal(e); };
+	auto rgen = [&normal,&e](){ return normal(e); };
 
 	// init
 	const auto sqrt2tau = sqrt(2 * tau);
@@ -50,7 +50,7 @@ int mala_within_gibbs() {
 
 	// generated funcs
 	auto gradlogpi = Mala::grad_numeric_blocks<dim,dim_m>(logpi);
-	auto lq = Mala::logq_blocks<dim,dim_m>(gradlogpi, tau);
+	auto lq = Mala::logq_blocks(gradlogpi, tau);
 	
 	// Record start time
 	auto start = std::chrono::high_resolution_clock::now();
@@ -61,7 +61,7 @@ int mala_within_gibbs() {
 			gradlog_j = gradlogpi[j](x);
 			
 			// \xi^k_j
-	    std::generate_n(std::begin(innov_j), dim_m, rgen);
+			std::generate_n(std::begin(innov_j), dim_m, rgen);
 
 			// x^k_j
 			std::copy_n(std::begin(x) + j*dim_m, dim_m, std::begin(x_j) );			
