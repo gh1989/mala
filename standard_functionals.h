@@ -21,9 +21,9 @@ namespace Mala{
 
 	// standard functionals
 	template<long unsigned N, long unsigned M=N, long unsigned P=0>
-	vfunc<N,M> grad_numeric(sfunc<N> f, Tnum epsilon = 1e-4, long unsigned pos=P)
+	auto grad_numeric(sfunc<N> f, Tnum epsilon = 1e-4, long unsigned pos=P)
 	{
-		vfunc<N,M> Output = [f, epsilon,pos](const nvec<N> &v)-> nvec<M> {
+		vfunc<N,M> Output = [f, epsilon,pos](const nvec<N> &v) {
 			nvec<M> grdlog;
 			const auto base = f(v);
 			nvec<N> tau = v;
@@ -41,7 +41,7 @@ namespace Mala{
 
 	// standard functionals
 	template<long unsigned N, long unsigned M=N>
-	vfunc_blocks<N,M> grad_numeric_blocks(sfunc<N> f, Tnum epsilon = 1e-4)
+	auto grad_numeric_blocks(sfunc<N> f, Tnum epsilon = 1e-4)
 	{
 		vfunc_blocks<N,M> Output;
 		for(auto i=0;i<(N/M);i++)
@@ -50,9 +50,9 @@ namespace Mala{
 	}
 
 	template<long unsigned N,long unsigned M=N, long unsigned P=0>
-	sfunc_binary<N> logq(vfunc<N,M> gradlogf, Tnum tau, long unsigned pos=P )
+	auto logq(vfunc<N,M> gradlogf, Tnum tau, long unsigned pos=P )
 	{
-		sfunc_binary<N> output = [gradlogf, tau, pos](const nvec<N>& x, const nvec<N>& y)->Tnum {
+		auto output = [gradlogf, tau, pos](const nvec<N>& x, const nvec<N>& y)->Tnum {
 			Tnum s2 = 4 * tau;
 			Tnum net = 0;
 			nvec<M> grad = gradlogf(x);
@@ -68,7 +68,7 @@ namespace Mala{
 	};
 
 	template<long unsigned N, long unsigned M=N>
-	sfunc_binary_blocks<N,M> logq_blocks(vfunc_blocks<N,M> gradlogf, Tnum tau )
+	auto logq_blocks(vfunc_blocks<N,M> gradlogf, Tnum tau )
 	{
 		sfunc_binary_blocks<N,M> Output;
 		for(auto i=0;i<N/M;i++)
@@ -78,7 +78,7 @@ namespace Mala{
 }
 
 template<long unsigned N> 
-Mala::nvec<N> operator+(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
+auto operator+(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
 {
 	Mala::nvec<N> c;
 	for(auto i=0;i<N;i++)
@@ -87,7 +87,7 @@ Mala::nvec<N> operator+(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
 }
 
 template<long unsigned N> 
-Mala::nvec<N> operator-(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
+auto operator-(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
 {
 	Mala::nvec<N> c;
 	for(auto i=0;i<N;i++)
@@ -96,7 +96,7 @@ Mala::nvec<N> operator-(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
 }
 
 template<long unsigned N> 
-Mala::nvec<N> operator*(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
+auto operator*(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
 {
 	Mala::nvec<N> c;
 	for(auto i=0;i<N;i++)
@@ -105,7 +105,7 @@ Mala::nvec<N> operator*(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
 }
 
 template<long unsigned N> 
-Mala::nvec<N> operator*(const Mala::Tnum& a, const Mala::nvec<N>& b)
+auto operator*(const Mala::Tnum& a, const Mala::nvec<N>& b)
 {
 	Mala::nvec<N> c;
 	for(auto i=0;i<N;i++)
@@ -114,7 +114,7 @@ Mala::nvec<N> operator*(const Mala::Tnum& a, const Mala::nvec<N>& b)
 }
 
 template<long unsigned N> 
-Mala::Tnum inner_product(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
+auto inner_product(const Mala::nvec<N>& a, const Mala::nvec<N>& b)
 {
 	Mala::Tnum c=0;
 	for(auto i=0;i<N;i++)
