@@ -28,7 +28,7 @@ int mala_within_gibbs() {
 	// model params
 	const Mala::Tnum tau = 0.1;
 	const size_t B = 1e5;
-	const size_t N = 1e7;
+	const size_t N = 1e5;
 
 	// rng
 	std::normal_distribution<Mala::Tnum> normal(0, 1);
@@ -89,7 +89,7 @@ int mala_within_gibbs() {
 	auto finish = std::chrono::high_resolution_clock::now();
 
 	I /= (N*dim_n);
-	std::cout << "acceptance: " << a / (N*dim_n) << std::endl;
+	std::cout << "Acceptance: " << a / (N*dim_n) << std::endl;
 	std::cout << "I: " << I << std::endl;
 	std::cout << "Time: " << (finish - start).count() / 1e9 << std::endl;
 	return 0;

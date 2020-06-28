@@ -4,9 +4,13 @@
 #include <chrono>  // for high_resolution_clock
 
 #include "mala.h"
+#define _LOGGING
 
 const size_t B = 1e5;
 const size_t N = 1e7;
+const size_t Fobs = 1e5;
+const size_t Nobs = N/Fobs;
+
 typedef double Tnum;
 const Tnum b = 0.01;
 const Tnum tau = 0.1;
@@ -68,9 +72,23 @@ Tnum boxmuller(Tnum mu = 0, Tnum sigma = 1) {
 	return sigma * z + mu;
 }
 
+
+template<typename T, unsigned long N>
+using Data = std::array<T, N>;
+
+template<typename T, unsigned long N>
+void log_data(Data<T, N> &data, T, T x)
+{
+}
+
 int mala() {
 	const auto sqrt2tau = sqrt(2 * tau);
 	Tnum x1 = 0, y1 = 0, x2, y2;
+
+	Tnum Is[Nobs];
+
+	unsigned long no = 0;
+
 	Tnum xprime = 0;
 	Tnum dX1, dX2;
 	Tnum logalpha = 0;
@@ -109,7 +127,17 @@ int mala() {
 		}
 
 		if (k > B)
+		{
 			I += x1 * x1 + y1 * y1;
+
+			// Data logging
+#ifdef _LOGGING
+			if (!(k % Fobs)) {
+				Is[no] = I;
+				std::cout << "I:" << I/k << std::endl;
+			}
+#endif
+		};
 	}
 
 	// Record end time

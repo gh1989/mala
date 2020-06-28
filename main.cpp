@@ -4,7 +4,7 @@
 int main()
 {
 	mala();
-	mala_more();
-	mala_within_gibbs();
+	//mala_more();
+	//mala_within_gibbs();
 	system("PAUSE");
 }
